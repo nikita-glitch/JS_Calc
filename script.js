@@ -3,9 +3,10 @@ let [output] = document.getElementsByClassName("output");
 let [output_mem] = document.getElementsByClassName("memory_output");
 let previosOperation = "";
 
-for (let i = 0; i < 10; i++) {
+for (let i = 9; i >= 0; i--) {
   let button = document.createElement("button");
   button.setAttribute("id", i);
+  button.setAttribute("class", 'digit_button');
   button.innerHTML = i;
   div.append(button);
 }
@@ -16,19 +17,19 @@ document.addEventListener("click", (e) => {
     return;
   }
   if (target.closest("div").className == "digits") {
-    console.log(
-      output.value == output_mem.value.split(output_mem.value.length - 1)
-    );
+    if (output.value == 0 && target.innerHTML == 0) {
+      return;
+    }
     if (
-      output.value &&
+      output.value != 0 &&
       output_mem.value.endsWith(previosOperation) &&
       previosOperation
     ) {
       output.value = "";
-    } else if (
-      output.value == output_mem.value.split(output_mem.value.length - 1)
-    ) {
-      output.value = output_mem.value;
+    }
+    if (output.value === '0' && target.innerHTML != 0) {
+      output.value = "";
+      output_mem.value = "";
     }
     output.value += target.innerHTML;
     output_mem.value += target.innerHTML;
@@ -50,11 +51,14 @@ document.addEventListener("click", (e) => {
         calculate("=");
         break;
       case "C":
-        output.value = "";
-        output_mem.value = "";
+        output.value = "0";
+        output_mem.value = "0";
         previosOperation = "";
         break;
       case ".":
+        if (output.value.endsWith(".")) {
+          return;
+        }
         output.value += ".";
         output_mem.value += ".";
     }
@@ -76,7 +80,7 @@ let calculate = (symbol) => {
         result = Number(bufArr[0]) * Number(bufArr[1]);
         break;
       case "/":
-        result = Number(bufArr[0]) / Number(bufArr[1]);
+        result = (Number(bufArr[0]) / Number(bufArr[1])).toFixed(3);
         break;
     }
     output.value = result;
@@ -99,7 +103,7 @@ let calculate = (symbol) => {
           result = Number(bufArr[0]) * Number(bufArr[1]);
           break;
         case "/":
-          result = Number(bufArr[0]) / Number(bufArr[1]);
+          result = (Number(bufArr[0]) / Number(bufArr[1])).toFixed(3);
           break;
       }
       output.value = result;
@@ -110,9 +114,7 @@ let calculate = (symbol) => {
 };
 
 let isEmpty = (symbol) => {
-  console.log(previosOperation);
-  console.log(output.value);
-  if (!output.value) {
+  if (output.value == 0) {
     return;
   }
   if (previosOperation) {

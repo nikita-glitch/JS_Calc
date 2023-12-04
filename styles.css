@@ -9,4 +9,27 @@ body {
 .outputs {
   display: flex;
   flex-direction: column;
+  margin: 20px 0 20px 0;
+  width: 220px;
+}
+.memory_output {
+  margin: 0 0 10px 0;
+}
+.digits {
+  display: grid;
+  
+  grid-template-columns: repeat(3, 50px);
+  gap: 5px;
+  margin: 0 10px 0 0;
+}
+.operations {
+  display: grid;
+  
+  grid-template-columns:  50px;
+  gap: 5px;
+}
+.button_container {
+  display: flex;
+  justify-content: center;
+  width: 700px;
 }
