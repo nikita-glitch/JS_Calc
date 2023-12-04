@@ -66,7 +66,7 @@ document.addEventListener("click", (e) => {
 });
 let calculate = (symbol) => {
   if (symbol == "=") {
-    output.value = "";
+    
     let bufArr = output_mem.value.split(previosOperation);
     let result = 0;
     switch (previosOperation) {
@@ -81,6 +81,9 @@ let calculate = (symbol) => {
         break;
       case "/":
         result = (Number(bufArr[0]) / Number(bufArr[1])).toFixed(3);
+        break;
+      default:
+        result = output.value;
         break;
     }
     output.value = result;

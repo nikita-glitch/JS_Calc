@@ -1,16 +1,21 @@
 body {
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
 .calc_body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 700px;
+  width: 420px;
+  justify-content: center;
 }
 .outputs {
   display: flex;
   flex-direction: column;
   margin: 20px 0 20px 0;
-  width: 220px;
+  width: 420px;
 }
 .memory_output {
   margin: 0 0 10px 0;
@@ -18,18 +23,35 @@ body {
 .digits {
   display: grid;
   
-  grid-template-columns: repeat(3, 50px);
+  grid-template-columns: repeat(3, 100px);
   gap: 5px;
   margin: 0 10px 0 0;
 }
 .operations {
   display: grid;
-  
-  grid-template-columns:  50px;
-  gap: 5px;
+  grid-template-columns:  100px;
+  column-gap: 10px;
+  row-gap: 5px;
+  height: 200px;
+  justify-items: end;
 }
 .button_container {
   display: flex;
   justify-content: center;
-  width: 700px;
+}
+button {
+  background: rgb(127, 164, 233);
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  
+}
+.digits > button {
+  border-radius: 50%;
+}
+.operations > button{ 
+  width: 50px;
+}
+input {
+  border: none;
 }
