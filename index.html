@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.cssS">
-  <title>Calc</title>
-</head>
-<body>
-  
-  <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Calc</title>
+  </head>
+  <body>
+    <main class="calc_body">
+      <div class="outputs">
+        <input class="memory_output" />
+        <input class="output" value=""/>
+      </div>
+      <div class="button_container">
+        <div class="digits"></div>
+        <div class="operations">
+          <button class="multiply">*</button>
+          <button class="division">/</button>
+          <button class="summary">+</button>
+          <button class="difference">-</button>
+          <button class="equality">=</button>
+          <button class="clear">C</button>
+          <button class="point">.</button>
+        </div>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
 </html>

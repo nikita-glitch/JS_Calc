@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+}
+.calc_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.outputs {
+  display: flex;
+  flex-direction: column;
+}
