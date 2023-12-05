@@ -3,12 +3,12 @@ let [output] = document.getElementsByClassName("output");
 let [output_mem] = document.getElementsByClassName("memory_output");
 let previosOperation = "";
 
-for (let i = 9; i >= 0; i--) {
+for (let i = 0; i <= 9; i++) {
   let button = document.createElement("button");
   button.setAttribute("id", i);
-  button.setAttribute("class", 'digit_button');
+  button.setAttribute("class", "digit_button");
   button.innerHTML = i;
-  div.append(button);
+  div.prepend(button);
 }
 
 document.addEventListener("click", (e) => {
@@ -16,7 +16,8 @@ document.addEventListener("click", (e) => {
   if (target.tagName != "BUTTON") {
     return;
   }
-  if (target.closest("div").className == "digits") {
+  if (
+    target.className == "digit_button") {
     if (output.value == 0 && target.innerHTML == 0) {
       return;
     }
@@ -27,13 +28,14 @@ document.addEventListener("click", (e) => {
     ) {
       output.value = "";
     }
-    if (output.value === '0' && target.innerHTML != 0) {
+    if (output.value === "0" && target.innerHTML != 0) {
       output.value = "";
       output_mem.value = "";
     }
     output.value += target.innerHTML;
     output_mem.value += target.innerHTML;
-  } else if (target.closest("div").className == "operations") {
+  } else if (
+    target.className == "operation") {
     switch (target.innerHTML) {
       case "+":
         calculate("+");
@@ -66,7 +68,6 @@ document.addEventListener("click", (e) => {
 });
 let calculate = (symbol) => {
   if (symbol == "=") {
-    
     let bufArr = output_mem.value.split(previosOperation);
     let result = 0;
     switch (previosOperation) {

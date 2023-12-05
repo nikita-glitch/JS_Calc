@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Calc</title>
-  </head>
-  <body>
-    <main class="calc_body">
-      <div class="outputs">
-        <input class="memory_output" value="0"/>
-        <input class="output" value="0"/>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Calc</title>
+</head>
+
+<body>
+  <main class="calc_body">
+    <div class="outputs">
+      <input disabled class="memory_output" value="0" />
+      <input disabled class="output" value="0" />
+    </div>
+    <button class="operation" id="clear">C</button>
+    <div class="button_container">
+      <div class="digits">
+        <button class="operation" id="point">.</button>
+        <button class="operation" id="equality">=</button>
       </div>
-      <div class="button_container">
-        <div class="digits"></div>
-        <div class="operations">
-          <button class="clear">C</button>
-          <button class="summary">+</button>
-          <button class="difference">-</button>
-          <button class="multiply">*</button>
-          <button class="division">/</button>
-          <button class="point">.</button>
-          <button class="equality">=</button>
-        </div>
+      <div class="operations">
+        <button class="operation" id="summary">+</button>
+        <button class="operation" id="difference">-</button>
+        <button class="operation" id="multiply">*</button>
+        <button class="operation" id="division">/</button>
+
       </div>
-    </main>
-    <script src="script.js"></script>
-  </body>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+
 </html>

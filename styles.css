@@ -2,36 +2,40 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
+  background-color: #d0d9f8;
 }
 .calc_body {
+  margin: 40px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 700px;
-  width: 420px;
+  background-color: #9dd2ea;
   justify-content: center;
+  border-radius: 4px;
+  padding: 20px 50px;
 }
 .outputs {
   display: flex;
   flex-direction: column;
-  margin: 20px 0 20px 0;
-  width: 420px;
+  margin: 0 0 20px 0;
+  box-shadow: 0 4px rgba(0,0,0,0.2)
 }
 .memory_output {
-  margin: 0 0 10px 0;
+  margin: 30px 0 10px 0;
+  opacity: 0.8;
+  background-color: rgb(217, 217, 218);
+
 }
 .digits {
   display: grid;
-  
-  grid-template-columns: repeat(3, 100px);
-  gap: 5px;
   margin: 0 10px 0 0;
+  grid-template-columns: repeat(3, 100px);
+  gap: 10px;
 }
 .operations {
   display: grid;
   grid-template-columns:  100px;
-  column-gap: 10px;
-  row-gap: 5px;
+  gap: 10px;
   height: 200px;
   justify-items: end;
 }
@@ -40,18 +44,33 @@ body {
   justify-content: center;
 }
 button {
-  background: rgb(127, 164, 233);
+  color: #495069;
+
+  
   border: none;
   cursor: pointer;
-  border-radius: 50%;
-  
+  width: 100px;
+  height: 100px;
+  font-size: 24px;
+  box-shadow: 0 4px rgba(0,0,0,0.2)
 }
-.digits > button {
-  border-radius: 50%;
-}
-.operations > button{ 
-  width: 50px;
+#clear {
+  width: 430px;
+  margin: 0 0 10px 0;
 }
 input {
+  font-size: 24px;
+  width: 420px;
+  padding: 10px 5px;
   border: none;
+  
+}
+
+button:active {
+  background-color: #d0d9f8;
+ 
+}
+button:hover{
+  width: 105px;
+  height: 105px;
 }
