@@ -60,9 +60,12 @@ document.addEventListener("click", (e) => {
       case ".":
         if (output.value.endsWith(".")) {
           return;
+        }else if(output.value == '' ) {
+          return;
         }
-        output.value += ".";
-        output_mem.value += ".";
+        output.value = ''
+        output.value += "0.";
+        output_mem.value += "0.";
     }
   }
 });
