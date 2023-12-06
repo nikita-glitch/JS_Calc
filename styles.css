@@ -42,6 +42,7 @@ body {
 .button_container {
   display: flex;
   justify-content: center;
+  margin: 0 0 10px 0;
 }
 button {
   color: #495069;
@@ -66,10 +67,7 @@ input {
   
 }
 
-button:active {
-  background-color: #d0d9f8;
- 
-}
+
 button:hover{
   background-color: #d0d9f8;
 }
