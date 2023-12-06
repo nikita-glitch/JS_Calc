@@ -69,8 +69,11 @@ document.addEventListener("click", (e) => {
         }
         if (previosOperation) {
           output.value = "";
-          output.value += "0."; 
+          output.value += "0.";
           output_mem.value += "0.";
+        } else {
+          output.value += ".";
+          output_mem.value += ".";
         }
     }
   }
@@ -78,6 +81,9 @@ document.addEventListener("click", (e) => {
 let calculate = (symbol) => {
   if (symbol == "=") {
     let bufArr = output_mem.value.split(previosOperation);
+    if (bufArr[1].endsWith("=")) {
+      bufArr[1] = bufArr[1].slice(0, bufArr[1].length - 1);
+    }
     let result = 0;
     switch (previosOperation) {
       case "+":
@@ -107,6 +113,9 @@ let calculate = (symbol) => {
       output.value = "";
       let bufArr = output_mem.value.split(previosOperation);
       let result = 0;
+      if (!bufArr[1]) {
+        return;
+      }
       switch (previosOperation) {
         case "+":
           result = Number(bufArr[0]) + Number(bufArr[1]);
@@ -136,8 +145,8 @@ let isEmpty = (symbol) => {
   if (previosOperation) {
     return true;
   } else {
-    console.log(symbol);
     output_mem.value += symbol;
+
     previosOperation += symbol;
     return false;
   }
@@ -156,10 +165,51 @@ output.addEventListener("blur", (e) => {
   }
 });
 output.addEventListener("input", (e) => {
-  
+  let target = e.target;
+  if (
+    (target.value == "+" ||
+      target.value == "-" ||
+      target.value == "*" ||
+      target.value == "/" ||
+      target.value == "=") &&
+    output_mem.value == "0"
+  ) {
+    output.value = "";
+    output_mem.value = "0";
+    return;
+  }
+  if (
+    isNaN(target.value) &&
+    !target.value.endsWith("+") &&
+    !target.value.endsWith("-") &&
+    !target.value.endsWith("*") &&
+    !target.value.endsWith("/") &&
+    !target.value.endsWith("=")
+  ) {
+    target.value = "";
+    return; //нельзя обрезать знак в изэмпти
+  }
+  if (!previosOperation) {
+    output_mem.value = target.value;
+  } else if (previosOperation) {
+    if (target.value.length == 1) {
+      output_mem.value += target.value;
+    } else {
+      output_mem.value += target.value.slice(
+        target.value.length - 1,
+        target.value.length
+      );
+    }
+  }
+  console.log(output_mem.value.at(output.value.length - 1));
+  console.log(output_mem.value.at(output.value.length - 2));
+
+  if (output_mem.value.at(output.value.length - 1) == output_mem.value.at(output.value.length)) {
+    console.log();
+  }
   switch (output.value.at(output.value.length - 1)) {
     case "+":
-      output_mem += output.value.slice(0, output.value.length - 1)
+      //output.value = output.value.slice(0, target.value.length - 1);
       calculate("+");
       output.value = "";
       break;
@@ -177,7 +227,7 @@ output.addEventListener("input", (e) => {
       break;
     case "=":
       calculate("=");
-      output.value = "";
+
       break;
     case ".":
       if (output.value.endsWith(".")) {
@@ -187,9 +237,15 @@ output.addEventListener("input", (e) => {
       }
       if (previosOperation) {
         output.value = "";
-        output.value += "0."; 
+        output.value += "0.";
         output_mem.value += "0.";
       }
+      break;  
+  }
+  console.log(output_mem.value.at(output.value.length - 1));
+  console.log(output_mem.value.at(output.value.length - 2));
+  if (output_mem.value.at(output.value.length - 1) == output_mem.value.at(output.value.length - 2)) {
+    output_mem.value = output_mem.value.slice(0, output_mem.value.length - 1)
   }
 });
 
@@ -207,10 +263,9 @@ pow_input.addEventListener("input", (e) => {
 });
 sqrt_button.addEventListener("click", (e) => {
   let num = output.value;
-  console.log(num);
   if (isNaN(Math.sqrt(num))) {
     output.value = "0";
-    output_mem.value = '0'
+    output_mem.value = "0";
   } else {
     output.value = output_mem.value = Math.sqrt(num);
   }
