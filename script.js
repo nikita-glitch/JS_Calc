@@ -80,7 +80,9 @@ document.addEventListener("click", (e) => {
 });
 let calculate = (symbol) => {
   if (symbol == "=") {
+    
     let bufArr = output_mem.value.split(previosOperation);
+    console.log(bufArr);
     if (bufArr[1].endsWith("=")) {
       bufArr[1] = bufArr[1].slice(0, bufArr[1].length - 1);
     }
@@ -113,8 +115,11 @@ let calculate = (symbol) => {
       output.value = "";
       let bufArr = output_mem.value.split(previosOperation);
       let result = 0;
-      if (!bufArr[1]) {
-        return;
+      let sign;
+      
+      if (isNaN(bufArr[1])) {
+        sign = bufArr[1].slice(bufArr[1].length - 1);
+        bufArr[1] = bufArr[1].slice(0, bufArr[1].length - 1);
       }
       switch (previosOperation) {
         case "+":
@@ -132,9 +137,15 @@ let calculate = (symbol) => {
           );
           break;
       }
+      console.log(bufArr)
+      console.log(result);
       output.value = result;
       output_mem.value = result + symbol;
-      previosOperation = symbol;
+      if (sign) {
+        previosOperation = sign;
+      } else {
+        previosOperation = symbol;
+      }
     }
   }
 };
@@ -143,6 +154,7 @@ let isEmpty = (symbol) => {
     return;
   }
   if (previosOperation) {
+    output.value = '';
     return true;
   } else {
     output_mem.value += symbol;
@@ -166,6 +178,7 @@ output.addEventListener("blur", (e) => {
 });
 output.addEventListener("input", (e) => {
   let target = e.target;
+  let buf;
   if (
     (target.value == "+" ||
       target.value == "-" ||
@@ -187,47 +200,51 @@ output.addEventListener("input", (e) => {
     !target.value.endsWith("=")
   ) {
     target.value = "";
-    return; //нельзя обрезать знак в изэмпти
+    return; 
   }
+  console.log(target.value.length);
   if (!previosOperation) {
     output_mem.value = target.value;
   } else if (previosOperation) {
-    if (target.value.length == 1) {
-      output_mem.value += target.value;
-    } else {
-      output_mem.value += target.value.slice(
-        target.value.length - 1,
-        target.value.length
-      );
-    }
+    buf = target.value;
   }
-  console.log(output_mem.value.at(output.value.length - 1));
-  console.log(output_mem.value.at(output.value.length - 2));
-
-  if (output_mem.value.at(output.value.length - 1) == output_mem.value.at(output.value.length)) {
-    console.log();
-  }
+ 
   switch (output.value.at(output.value.length - 1)) {
     case "+":
-      //output.value = output.value.slice(0, target.value.length - 1);
+      if (buf) {
+        output_mem.value += buf;
+      }
+      
       calculate("+");
       output.value = "";
       break;
     case "-":
+      if (buf) {
+        output_mem.value += buf;
+      }
       calculate("-");
       output.value = "";
       break;
     case "*":
+      if (buf) {
+        output_mem.value += buf;
+      }
       calculate("*");
       output.value = "";
       break;
     case "/":
+      if (buf) {
+        output_mem.value += buf;
+      }
       calculate("/");
       output.value = "";
       break;
     case "=":
+      if (buf) {
+        output_mem.value += buf;
+      }
       calculate("=");
-
+      output.value = output_mem.value;
       break;
     case ".":
       if (output.value.endsWith(".")) {
@@ -240,12 +257,15 @@ output.addEventListener("input", (e) => {
         output.value += "0.";
         output_mem.value += "0.";
       }
-      break;  
+      break;
   }
-  console.log(output_mem.value.at(output.value.length - 1));
-  console.log(output_mem.value.at(output.value.length - 2));
-  if (output_mem.value.at(output.value.length - 1) == output_mem.value.at(output.value.length - 2)) {
-    output_mem.value = output_mem.value.slice(0, output_mem.value.length - 1)
+  // console.log(output_mem.value.at(output.value.length - 1));
+  // console.log(output_mem.value.at(output.value.length - 2));
+  if (
+    output_mem.value.at(output.value.length - 1) ==
+    output_mem.value.at(output.value.length - 2) &&  output_mem.value.at(output.value.length - 1)== previosOperation
+  ) {
+    output_mem.value = output_mem.value.slice(0, output_mem.value.length - 1);
   }
 });
 
