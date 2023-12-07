@@ -2,7 +2,7 @@ let [div] = document.getElementsByClassName("digits");
 let [output] = document.getElementsByClassName("output");
 let [output_mem] = document.getElementsByClassName("memory_output");
 let [change_float] = document.getElementsByClassName("change_input");
-let [pow_input] = document.getElementsByClassName("pow input");
+let [pow_input] = document.getElementsByClassName("pow_input");
 let [pow_button] = document.getElementsByClassName("pow_button");
 let [sqrt_button] = document.getElementsByClassName("sqrt_button");
 let powExp = 1;
@@ -26,13 +26,6 @@ document.addEventListener("click", (e) => {
     if (output.value == 0 && target.innerHTML == 0) {
       return;
     }
-    if (
-      output.value != 0 &&
-      output_mem.value.endsWith(previosOperation) &&
-      previosOperation
-    ) {
-      output.value = "";
-    }
     if (output.value === "0" && target.innerHTML != 0) {
       output.value = "";
       output_mem.value = "";
@@ -43,15 +36,19 @@ document.addEventListener("click", (e) => {
     switch (target.innerHTML) {
       case "+":
         calculate("+");
+        output.value = "";
         break;
       case "-":
         calculate("-");
+        output.value = "";
         break;
       case "*":
         calculate("*");
+        output.value = "";
         break;
       case "/":
         calculate("/");
+        output.value = "";
         break;
       case "=":
         calculate("=");
@@ -64,9 +61,7 @@ document.addEventListener("click", (e) => {
       case ".":
         if (output.value.endsWith(".")) {
           return;
-        } else if (output.value == "") {
-          return;
-        }
+        } 
         if (previosOperation) {
           output.value = "";
           output.value += "0.";
@@ -80,9 +75,10 @@ document.addEventListener("click", (e) => {
 });
 let calculate = (symbol) => {
   if (symbol == "=") {
-    
     let bufArr = output_mem.value.split(previosOperation);
-    console.log(bufArr);
+    if (!bufArr[1]) {
+      return;
+    }
     if (bufArr[1].endsWith("=")) {
       bufArr[1] = bufArr[1].slice(0, bufArr[1].length - 1);
     }
@@ -116,10 +112,12 @@ let calculate = (symbol) => {
       let bufArr = output_mem.value.split(previosOperation);
       let result = 0;
       let sign;
-      
       if (isNaN(bufArr[1])) {
         sign = bufArr[1].slice(bufArr[1].length - 1);
         bufArr[1] = bufArr[1].slice(0, bufArr[1].length - 1);
+      }
+      if (!bufArr[1]) {
+        return;
       }
       switch (previosOperation) {
         case "+":
@@ -137,8 +135,6 @@ let calculate = (symbol) => {
           );
           break;
       }
-      console.log(bufArr)
-      console.log(result);
       output.value = result;
       output_mem.value = result + symbol;
       if (sign) {
@@ -154,7 +150,7 @@ let isEmpty = (symbol) => {
     return;
   }
   if (previosOperation) {
-    output.value = '';
+    output.value = "";
     return true;
   } else {
     output_mem.value += symbol;
@@ -200,21 +196,19 @@ output.addEventListener("input", (e) => {
     !target.value.endsWith("=")
   ) {
     target.value = "";
-    return; 
+    return;
   }
-  console.log(target.value.length);
   if (!previosOperation) {
     output_mem.value = target.value;
   } else if (previosOperation) {
     buf = target.value;
   }
- 
   switch (output.value.at(output.value.length - 1)) {
     case "+":
       if (buf) {
         output_mem.value += buf;
       }
-      
+
       calculate("+");
       output.value = "";
       break;
@@ -259,11 +253,10 @@ output.addEventListener("input", (e) => {
       }
       break;
   }
-  // console.log(output_mem.value.at(output.value.length - 1));
-  // console.log(output_mem.value.at(output.value.length - 2));
   if (
-    output_mem.value.at(output.value.length - 1) ==
-    output_mem.value.at(output.value.length - 2) &&  output_mem.value.at(output.value.length - 1)== previosOperation
+      output_mem.value.at(output.value.length - 1) ==
+      output_mem.value.at(output.value.length - 2) &&
+      output_mem.value.at(output.value.length - 1) == previosOperation
   ) {
     output_mem.value = output_mem.value.slice(0, output_mem.value.length - 1);
   }
@@ -278,7 +271,6 @@ pow_button.addEventListener("click", (e) => {
   output.value = output_mem.value = Math.pow(num, powExp);
 });
 pow_input.addEventListener("input", (e) => {
-  console.log(e.target.value);
   powExp = e.target.value;
 });
 sqrt_button.addEventListener("click", (e) => {
